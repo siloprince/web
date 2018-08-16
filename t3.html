@@ -47,7 +47,7 @@ window.addEventListener('load',function() {
     svg.push('</g></svg>');
     document.querySelector('div.draw').innerHTML = svg.join('');
     console.log(array.join(''));
-    document.querySelector('div.mail').innerHTML = `<a href='mailto:info@tessellation.jp?subject=t3puzzle&amp;body=`+svg.join('').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')+`'>mail</a>`;
+    document.querySelector('div.mail').innerHTML = `<a href='mailto:info@tessellation.jp?subject=t3puzzle&amp;body=`+array.join('').replace(/\n/g,'&#010;')+`'>mail</a>`;
     svg.length=0;
     array.length=0;
   }
