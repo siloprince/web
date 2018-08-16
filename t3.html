@@ -63,9 +63,9 @@ window.addEventListener('load',function() {
   }
   function calc (data,xx,yy) {
     let sum=0;
-    let max=2;
-    for (let i=-max;i<max;i++) {
-      for (let j=-max;j<max;j++) {
+    let max=1;
+    for (let i=-max;i<=max;i++) {
+      for (let j=-max;j<=max;j++) {
         let xxx = xx+i;
         let yyy = yy+j; 
         let loc = (yyy * width + xxx)* rgba;
