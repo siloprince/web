@@ -10,7 +10,7 @@ window.addEventListener('load',function() {
   let width = Math.floor(32*scale*sqrt3);
   let height = Math.floor(12*scale*3);
 
-  document.body.insertAdjacentHTML('beforeend','<br/><input type="file" accept="image/*" style="font-size:20px;" /><br/>');
+  document.body.insertAdjacentHTML('beforeend','<br/><input type="file" accept="image/*"/><br/>');
   document.body.insertAdjacentHTML('beforeend','<canvas></canvas></br>');
   document.body.insertAdjacentHTML('beforeend','<svg class="draw" width="240" height="180"></svg></br>');
   document.body.insertAdjacentHTML('beforeend','<div class="mail" style="font-size:20px;"></div>');
@@ -46,7 +46,7 @@ window.addEventListener('load',function() {
     svg.push('</g>');
     document.querySelector('svg.draw').innerHTML = svg.join('');
     console.log(array.join(''));
-    document.querySelector('div.mail').innerHTML = '<a href="mailto:info@tessellation.jp?subject=t3puzzle&body='+array.join('')+'">mail</a>';
+    document.querySelector('div.mail').innerHTML = '<a href="mailto:info@tessellation.jp?subject=t3puzzle&body='+svg.join('')+'">mail</a>';
     svg.length=0;
     array.length=0;
   }
