@@ -29,13 +29,23 @@ window.addEventListener('load',function() {
     let canvas = document.querySelector('canvas');
     let image = canvas.getContext('2d').getImageData(0,0,canvas.width, canvas.height);
     let data = image.data;
+    let sum  = 0;
     for (let y=0;y<12;y++) {
       for (let x=0;x<32;x++) {    
         let c = center(x,y);
         let xx = Math.floor(c[0] * scale);
         let yy = Math.floor(c[1] * scale);
-        let sum = calc(data,xx,yy);
-        if (sum>255*0.7) {
+        sum += calc(data,xx,yy);
+      }
+    }
+    let ave = sum/(12*32);
+    for (let y=0;y<12;y++) {
+      for (let x=0;x<32;x++) {    
+        let c = center(x,y);
+        let xx = Math.floor(c[0] * scale);
+        let yy = Math.floor(c[1] * scale);
+        let val = calc(data,xx,yy);
+        if (val > ave*0.7) {
           white(x,y);
         } else {
           black(x,y);
@@ -52,9 +62,17 @@ window.addEventListener('load',function() {
     array.length=0;
   }
   function calc (data,xx,yy) {
-    let loc = (yy * width + xx)* rgba;
-    let sum = data[loc+0]+data[loc+1]+data[loc+2];
-    return sum;
+    let sum=0;
+    let max=2;
+    for (let i=-max;i<max;i++) {
+      for (let j=-max;j<max;j++) {
+        let xxx = xx+i;
+        let yyy = yy+j; 
+        let loc = (yyy * width + xxx)* rgba;
+        sum = (data[loc+0]+data[loc+1]+data[loc+2])/3;
+      }
+    }
+    return sum/((2*max+1)*(2*max+1));
   }
   function white(x,y) {
     if (x===0) {
