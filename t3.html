@@ -10,12 +10,12 @@ window.addEventListener('load',function() {
   let width = Math.floor(32*scale*sqrt3);
   let height = Math.floor(12*scale*3);
 
-  document.body.insertAdjacentHTML('beforeend','<input type="file" accept="image/*"/><br/>');
-  document.body.insertAdjacentHTML('beforeend','<canvas></canvas>');
-  document.body.insertAdjacentHTML('beforeend','<svg width="350" height="240"></svg>');
-  document.body.insertAdjacentHTML('beforeend','<div class="mail"></div>');
+  document.body.insertAdjacentHTML('beforeend','<input type="file" accept="image/*" style="font-size:20px;" /><br/>');
+  document.body.insertAdjacentHTML('beforeend','<canvas></canvas></br>');
+  document.body.insertAdjacentHTML('beforeend','<svg class="draw" width="350" height="240"></svg></br>');
+  document.body.insertAdjacentHTML('beforeend','<div class="mail" style="font-size:20px;"></div>');
 
-  document.addEventListener('change',  drawImage);
+  document.querySelector('input').addEventListener('change',  drawImage);
 
   let canvas = document.querySelector('canvas');
 
@@ -44,7 +44,7 @@ window.addEventListener('load',function() {
     svg.push('</g>');
     drawGrid();
     svg.push('</g>');
-    document.querySelector('svg').innerHTML = svg.join('');
+    document.querySelector('svg.draw').innerHTML = svg.join('');
     console.log(array.join(''));
     document.querySelector('div.mail').innerHTML = '<a href="mailto:info@tessellation.jp?subject=t3puzzle&body='+array.join('')+'">mail</a>';
     svg.length=0;
