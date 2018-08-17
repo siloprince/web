@@ -5,19 +5,23 @@
     <meta charset="utf-8" />
     <script>
 window.addEventListener('load',function() {
-  let scale = 4;
+  let svgScale = 4;
+  let canvasScale = 4;
   let sqrt3 = 1.7320508;
-  let width = Math.round(32*scale*sqrt3);
-  let height = Math.round(12*scale*3);
+  let svgWidth = Math.round(32*svgScale*sqrt3);
+  let svgHeight = Math.round(12*svgScale*3);
+  let canvasWidth = Math.round(32*canvasScale*sqrt3);
+  let canvasHeight = Math.round(12*canvasScale*3);
 
   document.body.insertAdjacentHTML('beforeend','<br/><input type="file" accept="image/*"/><br/>');
-  document.body.insertAdjacentHTML('beforeend','<canvas></canvas></br>');
+  document.body.insertAdjacentHTML('beforeend','<canvas class="disp"></canvas></br>');
   document.body.insertAdjacentHTML('beforeend','<div class="draw"></div></br>');
   document.body.insertAdjacentHTML('beforeend','<div class="mail" style="font-size:20px;"></div>');
+  //document.body.insertAdjacentHTML('beforeend','<canvas class="hidden"></canvas></br>');
 
   document.querySelector('input').addEventListener('change',  drawImage);
 
-  let canvas = document.querySelector('canvas');
+  let disp = document.querySelector('canvas.disp');
 
   let array = [];
   let svg = [];
@@ -25,9 +29,9 @@ window.addEventListener('load',function() {
   function run (e) {
     svg.push(`<svg width="240" height="180">`);
     svg.push(`<g transform="translate(10,10)">`);
-    svg.push(`<g transform="scale(${scale},${scale})">`);
-    let canvas = document.querySelector('canvas');
-    let image = canvas.getContext('2d').getImageData(0,0,canvas.width, canvas.height);
+    svg.push(`<g transform="scale(${svgScale},${svgScale})">`);
+    let disp = document.querySelector('canvas.disp');
+    let image = disp.getContext('2d').getImageData(0,0,disp.width, disp.height);
     let data = image.data;
     let peak = [];
     let range = 10;
@@ -40,9 +44,9 @@ window.addEventListener('load',function() {
           continue;
         }  
         let c = center(x,y);
-        let xx = Math.round(c[0] * scale);
-        let yy = Math.round(c[1] * scale);
-        let val = calc(data,xx,yy);
+        let xx = Math.round(c[0] * canvasScale);
+        let yy = Math.round(c[1] * canvasScale);
+        let val = calc(data,xx,yy,canvasWidth,canvasHeight);
         let zone = Math.floor(val/range);
         peak[zone].count+=1;
       }
@@ -74,9 +78,9 @@ window.addEventListener('load',function() {
           continue;
         }
         let c = center(x,y);
-        let xx = Math.round(c[0] * scale);
-        let yy = Math.round(c[1] * scale);
-        let val = calc(data,xx,yy,[firstPeakIndex*range+range/2,secondPeakIndex*range+range/2]);
+        let xx = Math.round(c[0] * canvasScale);
+        let yy = Math.round(c[1] * canvasScale);
+        let val = calc(data,xx,yy,canvasWidth,canvasHeight,[firstPeakIndex*range+range/2,secondPeakIndex*range+range/2]);
         if (val===0) {
           white(x,y);
         } else {
@@ -85,7 +89,7 @@ window.addEventListener('load',function() {
       }
     }
     svg.push('</g>');
-    drawGrid();
+    drawGrid(svgWidth,svgHeight);
     svg.push('</g></svg>');
     document.querySelector('div.draw').innerHTML = svg.join('');
     console.log(array.join(''));
@@ -93,7 +97,7 @@ window.addEventListener('load',function() {
     svg.length=0;
     array.length=0;
   }
-  function calc (data,xx,yy,peaks) {
+  function calc (data,xx,yy,width,height,peaks) {
     let sum=0;
     let max=1;
     let b=0;
@@ -188,7 +192,7 @@ window.addEventListener('load',function() {
   function stroke() {
       svg.push('" style="fill:none;stroke:#888888;stroke-width:1;stroke-linecap:round;"></path>');
   }
-  function drawGrid () {
+  function drawGrid (width,height) {
     beginPath();
     for (let y=0;y<=6;y++) {
         let x0 = 0;
@@ -256,10 +260,10 @@ window.addEventListener('load',function() {
   function drawImage (e) {
     let image = new Image();
     image.addEventListener('load', function() {
-      let canvas = document.querySelector('canvas');
-      canvas.setAttribute('width',width);
-      canvas.setAttribute('height',height);
-      canvas.getContext('2d').drawImage(this, 0, 0, width, height);
+      let disp = document.querySelector('canvas.disp');
+      disp.setAttribute('width',canvasWidth);
+      disp.setAttribute('height',canvasHeight);
+      disp.getContext('2d').drawImage(this, 0, 0, disp.width, disp.height);
       run();
     });
     let reader = new FileReader();
