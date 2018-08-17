@@ -110,7 +110,7 @@ window.addEventListener('load',function() {
         for (let j=-2*jmax;j<=jmax;j++) {
           let xxx = xx+i;
           let yyy = yy+j; 
-          if (xxx<0 || xxx>=canvasWidth || yyy<0 || yyy>=canvasHeight) {
+          if (xxx<0 || xxx>=width || yyy<0 || yyy>=height) {
             continue;
           }
           ctx.fillRect(xxx,yyy,1,1);
@@ -135,7 +135,7 @@ window.addEventListener('load',function() {
         for (let j=-jmax;j<=2*jmax;j++) {
           let xxx = xx+i;
           let yyy = yy+j;
-          if (xxx<0 || xxx>=canvasWidth || yyy<0 || yyy>=canvasHeight) {
+          if (xxx<0 || xxx>=width || yyy<0 || yyy>=height) {
             continue;
           }
           ctx.fillRect(xxx,yyy,1,1);
