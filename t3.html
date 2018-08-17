@@ -118,6 +118,7 @@ window.addEventListener('load',function() {
             console.log(xxx+' '+yyy);
             continue;
           }
+          console.log('r:'+val);
           sum += val;
           if (peaks) {
             if (Math.abs(peaks[0]-val)>Math.abs(peaks[1]-val)) {
@@ -145,6 +146,7 @@ window.addEventListener('load',function() {
             console.log(xxx+' '+yyy);
             continue;
           }
+          console.log('b:'+val);
           sum += val;
           if (peaks) {
             if (Math.abs(peaks[0]-val)>Math.abs(peaks[1]-val)) {
