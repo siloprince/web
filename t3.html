@@ -7,8 +7,8 @@
 window.addEventListener('load',function() {
   let scale = 4;
   let sqrt3 = 1.7320508;
-  let width = Math.floor(32*scale*sqrt3);
-  let height = Math.floor(12*scale*3);
+  let width = Math.round(32*scale*sqrt3);
+  let height = Math.round(12*scale*3);
 
   document.body.insertAdjacentHTML('beforeend','<br/><input type="file" accept="image/*"/><br/>');
   document.body.insertAdjacentHTML('beforeend','<canvas></canvas></br>');
@@ -29,23 +29,55 @@ window.addEventListener('load',function() {
     let canvas = document.querySelector('canvas');
     let image = canvas.getContext('2d').getImageData(0,0,canvas.width, canvas.height);
     let data = image.data;
-    let sum  = 0;
+    let peak = [];
+    let range = 10;
+    for (let i=0;i<255/range;i++) {
+      peak.push({ count:0, index: i});
+    }
     for (let y=0;y<12;y++) {
-      for (let x=0;x<32;x++) {    
+      for (let x=0;x<32;x++) {  
+        if (outside(x,y)) {
+          continue;
+        }  
         let c = center(x,y);
-        let xx = Math.floor(c[0] * scale);
-        let yy = Math.floor(c[1] * scale);
-        sum += calc(data,xx,yy);
+        let xx = Math.round(c[0] * scale);
+        let yy = Math.round(c[1] * scale);
+        let val = calc(data,xx,yy);
+        let zone = Math.floor(val/range);
+        peak[zone].count+=1;
       }
     }
-    let ave = sum/(12*32);
+    peak.sort(function(a,b){
+        if( a.count > b.count ) return -1;
+        if( a.count < b.count ) return 1;
+        return 0;
+    });
+    let firstPeakIndex=peak[0].index;
+    if (Math.abs(peak[0].index - peak[1].index)!==1) {
+      secondPeakIndex=peak[1].index;
+    } else {
+      if ((Math.abs(peak[1].index - peak[2].index)!==1)&&(Math.abs(peak[0].index - peak[2].index)!==1)) {
+        secondPeakIndex=peak[2].index;
+      } else {
+        secondPeakIndex=peak[3].index;
+      }
+    }
+    if (firstPeakIndex>secondPeakIndex) {
+      let tmpIndex = firstPeakIndex;
+      firstPeakIndex = secondPeakIndex;
+      secondPeakIndex = tmpIndex;
+    }
+    console.log('1:'+firstPeakIndex+' 2:'+secondPeakIndex);
     for (let y=0;y<12;y++) {
-      for (let x=0;x<32;x++) {    
+      for (let x=0;x<32;x++) {  
+        if (outside(x,y)) {
+          continue;
+        }
         let c = center(x,y);
-        let xx = Math.floor(c[0] * scale);
-        let yy = Math.floor(c[1] * scale);
-        let val = calc(data,xx,yy);
-        if (val > ave*0.7) {
+        let xx = Math.round(c[0] * scale);
+        let yy = Math.round(c[1] * scale);
+        let val = calc(data,xx,yy,[firstPeakIndex*range+range/2,secondPeakIndex*range+range/2]);
+        if (val===0) {
           white(x,y);
         } else {
           black(x,y);
@@ -61,18 +93,39 @@ window.addEventListener('load',function() {
     svg.length=0;
     array.length=0;
   }
-  function calc (data,xx,yy) {
+  function calc (data,xx,yy,peaks) {
     let sum=0;
     let max=1;
+    let b=0;
+    let w=0;
+    //let ctx = canvas.getContext('2d');
+    //ctx.fillStyle = "rgb(200, 0, 0)";
     for (let i=-max;i<=max;i++) {
       for (let j=-max;j<=max;j++) {
         let xxx = xx+i;
         let yyy = yy+j; 
+        //ctx.fillRect(xxx,yyy,1,1);
         let loc = (yyy * width + xxx)* rgba;
-        sum = (data[loc+0]+data[loc+1]+data[loc+2])/3;
+        let val = (data[loc+0]+data[loc+1]+data[loc+2])/3;
+        sum += val;
+        if (peaks) {
+          if (Math.abs(peaks[0]-val)>Math.abs(peaks[1]-val)) {
+            b++;
+          } else {
+            w++;
+          }
+        }
       }
     }
-    return sum/((2*max+1)*(2*max+1));
+    if (peaks) {
+      if (b>w) {
+        return 0;
+      } else {
+        return 255;
+      }
+    } else {
+      return sum/((2*max+1)*(2*max+1));
+    }
   }
   function white(x,y) {
     if (x===0) {
@@ -107,13 +160,16 @@ window.addEventListener('load',function() {
     }
     return [cx,cy];
   }
+  function outside(x,y) {
+    return((x+y <6)||(x+y>37)||(y-x>5)||(x-y>26));
+  }
   function triangle(x,y,color) {
     let c = center(x,y);
     let rot = 0;
     if ((x+y)%2===0){
       rot = 180;
     }
-    if ((x+y <6)||(x+y>37)||(y-x>5)||(x-y>26)) {
+    if (outside(x,y)) {
         return;
     }
     svg.push(`<g transform="translate(${c[0]},${c[1]})rotate(${rot})">`);
@@ -130,7 +186,7 @@ window.addEventListener('load',function() {
       svg.push('<path d="');
   }
   function stroke() {
-      svg.push('" style="fill:none;stroke:#555555;stroke-width:3;"></path>');
+      svg.push('" style="fill:none;stroke:#888888;stroke-width:1;stroke-linecap:round;"></path>');
   }
   function drawGrid () {
     beginPath();
