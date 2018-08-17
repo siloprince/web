@@ -105,7 +105,7 @@ window.addEventListener('load',function() {
     if ((x+y)%2===0) {
       ctx.fillStyle = "rgb(255, 0, 0)";
       for (let i=-imax;i<=imax;i++) {
-        for (let j=-2*jmax;j<=jmax;j++) {
+        for (let j=-jmax;j<=jmax;j++) {
           let xxx = xx+i;
           let yyy = yy+j;
           if (xxx<0 || xxx>=width || yyy<0 || yyy>=height) {
