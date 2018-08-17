@@ -111,7 +111,7 @@ window.addEventListener('load',function() {
           if (xxx<0 || xxx>=width || yyy<0 || yyy>=height) {
             continue;
           }
-          if (j/sqrt3+i < 1 || j/sqrt-i < -1) {
+          if (j/(3*jmax)+i/imax < 1 || j/(3*jmax)-i/imax < -1) {
             continue;
           }
           ctx.fillRect(xxx,yyy,1,1);
@@ -137,7 +137,7 @@ window.addEventListener('load',function() {
           if (xxx<0 || xxx>=width || yyy<0 || yyy>=height) {
             continue;
           }
-          if (j/sqrt3-i > 0 || j/sqrt-i >2) {
+          if (j/(3*jmax)-i/imax > 0 || j/(3*jmax)-i/imax >2) {
             continue;
           }
           ctx.fillRect(xxx,yyy,1,1);
