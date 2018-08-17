@@ -109,6 +109,9 @@ window.addEventListener('load',function() {
         for (let j=-2*jmax;j<=jmax;j++) {
           let xxx = xx+i;
           let yyy = yy+j; 
+          if (xxx<0 || xxx>=canvasWidth || yyy<0 || yyy>=canvasHeight) {
+            continue;
+          }
           ctx.fillRect(xxx,yyy,1,1);
           let loc = (yyy * width + xxx)* rgba;
           let val = (data[loc+0]+data[loc+1]+data[loc+2])/3;
@@ -129,7 +132,10 @@ window.addEventListener('load',function() {
       for (let i=-imax;i<=imax;i++) {
         for (let j=-jmax;j<=2*jmax;j++) {
           let xxx = xx+i;
-          let yyy = yy+j; 
+          let yyy = yy+j;
+          if (xxx<0 || xxx>=canvasWidth || yyy<0 || yyy>=canvasHeight) {
+            continue;
+          }
           ctx.fillRect(xxx,yyy,1,1);
           let loc = (yyy * width + xxx)* rgba;
           let val = (data[loc+0]+data[loc+1]+data[loc+2])/3;
