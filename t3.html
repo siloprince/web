@@ -45,7 +45,6 @@ window.addEventListener('load',function() {
         }  
         let val = calc(data,x,y,canvasWidth,canvasHeight);
         let zone = Math.floor(val/range);
-        console.log(zone);
         peak[zone].count+=1;
       }
     }
@@ -161,7 +160,11 @@ window.addEventListener('load',function() {
         return 255;
       }
     } else {
-      return sum/mom;
+      if (mom===0) {
+        return 0;
+      } else {
+        return sum/mom;
+      }
     }
   }
   function white(x,y) {
