@@ -45,6 +45,7 @@ window.addEventListener('load',function() {
         }  
         let val = calc(data,x,y,canvasWidth,canvasHeight);
         let zone = Math.floor(val/range);
+        console.log(zone);
         peak[zone].count+=1;
       }
     }
