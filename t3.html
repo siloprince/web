@@ -54,6 +54,7 @@ window.addEventListener('load',function() {
         return 0;
     });
     let firstPeakIndex=peak[0].index;
+    let secondPeakIndex=-1;
     if (Math.abs(peak[0].index - peak[1].index)!==1) {
       secondPeakIndex=peak[1].index;
     } else {
@@ -68,7 +69,6 @@ window.addEventListener('load',function() {
       firstPeakIndex = secondPeakIndex;
       secondPeakIndex = tmpIndex;
     }
-    console.log('1:'+firstPeakIndex+' 2:'+secondPeakIndex);
     for (let y=0;y<12;y++) {
       for (let x=0;x<32;x++) {  
         if (outside(x,y)) {
@@ -76,9 +76,9 @@ window.addEventListener('load',function() {
         }
         let val = calc(data,x,y,canvasWidth,canvasHeight,[firstPeakIndex*range+range/2,secondPeakIndex*range+range/2]);
         if (val===0) {
-          white(x,y);
-        } else {
           black(x,y);
+        } else {
+          white(x,y);
         }
       }
     }
@@ -119,7 +119,7 @@ window.addEventListener('load',function() {
           let val = (data[loc+0]+data[loc+1]+data[loc+2])/3;
           sum += val;
           if (peaks) {
-            if (Math.abs(peaks[0]-val)>Math.abs(peaks[1]-val)) {
+            if (Math.abs(peaks[0]-val) < Math.abs(peaks[1]-val)) {
               b++;
             } else {
               w++;
@@ -145,7 +145,7 @@ window.addEventListener('load',function() {
           let val = (data[loc+0]+data[loc+1]+data[loc+2])/3;
           sum += val;
           if (peaks) {
-            if (Math.abs(peaks[0]-val)>Math.abs(peaks[1]-val)) {
+            if (Math.abs(peaks[0]-val) < Math.abs(peaks[1]-val)) {
               b++;
             } else {
               w++;
