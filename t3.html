@@ -48,6 +48,7 @@ window.addEventListener('load',function() {
         peak[zone].count+=1;
       }
     }
+    /*
     let dup = peak.concat([]);
     dup.sort(function(a,b){
         if( a.count > b.count ) return -1;
@@ -97,7 +98,7 @@ window.addEventListener('load',function() {
         }
       }
     }
-    /*
+    */
     peak.sort(function(a,b){
         if( a.count > b.count ) return -1;
         if( a.count < b.count ) return 1;
@@ -119,7 +120,7 @@ window.addEventListener('load',function() {
       firstPeakIndex = secondPeakIndex;
       secondPeakIndex = tmpIndex;
     }
-    */
+    
     for (let y=0;y<12;y++) {
       for (let x=0;x<32;x++) {  
         if (outside(x,y)) {
