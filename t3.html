@@ -101,9 +101,11 @@ window.addEventListener('load',function() {
     let jmax= Math.round(canvasScale);
     let b=0;
     let w=0;
+    let rrr=0;
     let ctx = disp.getContext('2d');
     if ((x+y)%2===0) {
-      ctx.fillStyle = "rgb(255, 0, 0)";
+
+      //ctx.fillStyle = "rgb(255, 0, 0)";
       for (let i=-imax;i<=imax;i++) {
         for (let j=-2*jmax;j<=jmax;j++) {
           let xxx = xx+i;
@@ -114,7 +116,7 @@ window.addEventListener('load',function() {
           if ((j+2*jmax)/(3*jmax)+i/imax < 0 || (j+2*jmax)/(3*jmax)-i/imax < 0) {
             continue;
           }
-          ctx.fillRect(xxx,yyy,1,1);
+          //ctx.fillRect(xxx,yyy,1,1);
           let loc = (yyy * width + xxx)* rgba;
           let val = (data[loc+0]+data[loc+1]+data[loc+2])/3;
           sum += val;
@@ -128,8 +130,13 @@ window.addEventListener('load',function() {
           mom++;
         }
       }
+      if (peaks) {
+      if (rrr===0) {
+        console.log(b+' '+w+' '+mom);
+        rrr=1;
+      }}
     } else {
-      ctx.fillStyle = "rgb(0, 0, 255)";
+      //ctx.fillStyle = "rgb(0, 0, 255)";
       for (let i=-imax;i<=imax;i++) {
         for (let j=-jmax;j<=2*jmax;j++) {
           let xxx = xx+i;
@@ -140,7 +147,7 @@ window.addEventListener('load',function() {
           if ((j+jmax)/(3*jmax)+i/imax >  1 || (j+jmax)/(3*jmax)-i/imax > 1 ) {
             continue;
           }
-          ctx.fillRect(xxx,yyy,1,1);
+          //ctx.fillRect(xxx,yyy,1,1);
           let loc = (yyy * width + xxx)* rgba;
           let val = (data[loc+0]+data[loc+1]+data[loc+2])/3;
           sum += val;
