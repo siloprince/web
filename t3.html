@@ -111,6 +111,9 @@ window.addEventListener('load',function() {
           if (xxx<0 || xxx>=width || yyy<0 || yyy>=height) {
             continue;
           }
+          if (y/sqrt3+x < 1 || y/sqrt-x < -1) {
+            continue;
+          }
           ctx.fillRect(xxx,yyy,1,1);
           let loc = (yyy * width + xxx)* rgba;
           let val = (data[loc+0]+data[loc+1]+data[loc+2])/3;
@@ -132,6 +135,9 @@ window.addEventListener('load',function() {
           let xxx = xx+i;
           let yyy = yy+j;
           if (xxx<0 || xxx>=width || yyy<0 || yyy>=height) {
+            continue;
+          }
+          if (y/sqrt3-x > 0 || y/sqrt-x >2) {
             continue;
           }
           ctx.fillRect(xxx,yyy,1,1);
