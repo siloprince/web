@@ -114,7 +114,7 @@ window.addEventListener('load',function() {
             continue;
           }
           ctx.fillRect(xxx,yyy,1,1);
-          let loc = (yyy * width + xxx)* rgba;
+          let loc = (yyy * (width-1) + xxx)* rgba;
           let val = (data[loc+0]+data[loc+1]+data[loc+2])/3;
           sum += val;
           if (peaks) {
@@ -139,7 +139,7 @@ window.addEventListener('load',function() {
             continue;
           }
           ctx.fillRect(xxx,yyy,1,1);
-          let loc = (yyy * width + xxx)* rgba;
+          let loc = (yyy * (width-1) + xxx)* rgba;
           let val = (data[loc+0]+data[loc+1]+data[loc+2])/3;
           sum += val;
           if (peaks) {
