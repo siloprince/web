@@ -97,24 +97,22 @@ window.addEventListener('load',function() {
     let yy = Math.round(c[1] * canvasScale);      
     let sum=0;
     let mom=0;
-    let imax= 3;
-    let jmax= 3;
+    let imax= sqrt3 * canvasScale;
+    let jmax= canvasScale;
     let b=0;
     let w=0;
     let ctx = disp.getContext('2d');
     if ((x+y)%2===0) {
       ctx.fillStyle = "rgb(255, 0, 0)";
-      imax = sqrt3 * canvasScale;
-      jmax = canvasScale;
       for (let i=-imax;i<=imax;i++) {
         for (let j=-2*jmax;j<=jmax;j++) {
           let xxx = xx+i;
-          let yyy = yy+j; 
+          let yyy = yy+j;
           if (xxx<0 || xxx>=width || yyy<0 || yyy>=height) {
             continue;
           }
           ctx.fillRect(xxx,yyy,1,1);
-          let loc = (yyy * (width-1) + xxx)* rgba;
+          let loc = (yyy * width + xxx)* rgba;
           let val = (data[loc+0]+data[loc+1]+data[loc+2])/3;
           sum += val;
           if (peaks) {
@@ -129,8 +127,6 @@ window.addEventListener('load',function() {
       }
     } else {
       ctx.fillStyle = "rgb(0, 0, 255)";
-      imax = sqrt3 * canvasScale;
-      jmax = canvasScale;
       for (let i=-imax;i<=imax;i++) {
         for (let j=-jmax;j<=2*jmax;j++) {
           let xxx = xx+i;
@@ -139,7 +135,7 @@ window.addEventListener('load',function() {
             continue;
           }
           ctx.fillRect(xxx,yyy,1,1);
-          let loc = (yyy * (width-1) + xxx)* rgba;
+          let loc = (yyy * width + xxx)* rgba;
           let val = (data[loc+0]+data[loc+1]+data[loc+2])/3;
           sum += val;
           if (peaks) {
