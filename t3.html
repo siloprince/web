@@ -97,15 +97,15 @@ window.addEventListener('load',function() {
     let yy = Math.round(c[1] * canvasScale);      
     let sum=0;
     let mom=0;
-    let imax= sqrt3 * canvasScale;
-    let jmax= canvasScale;
+    let imax= 3;
+    let jmax= 3;
     let b=0;
     let w=0;
     let ctx = disp.getContext('2d');
     if ((x+y)%2===0) {
       ctx.fillStyle = "rgb(255, 0, 0)";
-      imax = 3;
-      jmax = 3;
+      imax = sqrt3 * canvasScale;
+      jmax = canvasScale;
       for (let i=-imax;i<=imax;i++) {
         for (let j=-2*jmax;j<=jmax;j++) {
           let xxx = xx+i;
@@ -163,8 +163,7 @@ window.addEventListener('load',function() {
       if (mom===0) {
         return 0;
       } else {
-          console.log(sum+' '+mom);
-        return 1;//sum/mom;
+        return sum/mom;
       }
     }
   }
