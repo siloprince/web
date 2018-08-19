@@ -167,7 +167,8 @@ window.addEventListener('load',function() {
             array[idx]='0';
           }
           console.log(array.join(''));
-          document.querySelector('div.mail').innerHTML = `<a href='mailto:info@tessellation.jp?subject=t3puzzle&amp;body=`+array.join('')+`'>${mailstr}</a>`;
+          let ts = (new Date()).getTime();
+          document.querySelector('div.mail').innerHTML = `<a href='mailto:info@tessellation.jp?subject=t3puzzle${ts}&amp;body=`+array.join('')+`'>${mailstr}</a>`;
         }
       }
     }
