@@ -168,13 +168,13 @@ window.addEventListener('load',function() {
           }
           console.log(array.join(''));
           let ts = (new Date()).getTime();
-          document.querySelector('div.mail').innerHTML = `<a href='mailto:info@tessellation.jp?subject=t3puzzle${ts}&amp;body=`+array.join('')+`'>${mailstr}</a>`;
+          document.querySelector('div.mail').innerHTML = `<a href='mailto:info@tessellation.jp?subject=t3puzzle ${ts}&amp;body=`+array.join('')+`'>${mailstr}</a>`;
         }
       }
     }
     console.log(array.join(''));
     let ts = (new Date()).getTime();
-    document.querySelector('div.mail').innerHTML = `<a href='mailto:info@tessellation.jp?subject=t3puzzle${ts}&amp;body=`+array.join('')+`'>${mailstr}</a>`;
+    document.querySelector('div.mail').innerHTML = `<a href='mailto:info@tessellation.jp?subject=t3puzzle ${ts}&amp;body=`+array.join('')+`'>${mailstr}</a>`;
   }
   function calc (data,x,y,width,height,peaks) {
     let c = center(x,y);
