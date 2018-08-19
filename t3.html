@@ -151,6 +151,7 @@ window.addEventListener('load',function() {
     svgNode.addEventListener('click',flip,false);
     svgNode.addEventListener('touchend',flip,false);
     function flip(e) {
+      e.preventDefault();
       let target = e.target;
       let tagName = target.tagName;
       if (tagName==='polygon') {
