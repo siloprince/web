@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <script>
 window.addEventListener('load',function() {
+  let mailstr = `メールで送信(画像も添付ください`;
   let svgScale = 4;
   let canvasScale = 20;
   let sqrt3 = 1.7320508;
@@ -13,10 +14,10 @@ window.addEventListener('load',function() {
   let canvasWidth = Math.round(32*canvasScale*sqrt3);
   let canvasHeight = Math.round(12*canvasScale*3);
 
-  document.body.insertAdjacentHTML('beforeend','<br/><input type="file" accept="image/*"/><br/>');
+  document.body.insertAdjacentHTML('beforeend','<input type="file" accept="image/*"/><br/>');
   document.body.insertAdjacentHTML('beforeend','<canvas class="dummy"></canvas></br>');
-  document.body.insertAdjacentHTML('beforeend','<div class="draw"></div></br>');
-  document.body.insertAdjacentHTML('beforeend','<div class="mail" style="font-size:20px;"></div>');
+  document.body.insertAdjacentHTML('beforeend','<div class="draw"></div>');
+  document.body.insertAdjacentHTML('beforeend','<div class="mail" style="font-size:15px;"></div>');
   document.body.insertAdjacentHTML('beforeend','<canvas style="display:none;" class="disp"></canvas></br>');
 
   document.querySelector('input').addEventListener('change',  drawImage);
@@ -30,7 +31,7 @@ window.addEventListener('load',function() {
   function run (e) {
     svg.length=0;
     array.length=0;
-    svg.push(`<svg width="240" height="180">`);
+    svg.push(`<svg width="240" height="160">`);
     svg.push(`<style>polygon.white { fill:white; } </style>`);
     svg.push(`<g transform="translate(10,10)">`);
     svg.push(`<g transform="scale(${svgScale},${svgScale})">`);
@@ -166,12 +167,12 @@ window.addEventListener('load',function() {
             array[idx]='0';
           }
           console.log(array.join(''));
-          document.querySelector('div.mail').innerHTML = `<a href='mailto:info@tessellation.jp?subject=t3puzzle&amp;body=`+array.join('')+`'>Mail (please also attach the original image)</a>`;
+          document.querySelector('div.mail').innerHTML = `<a href='mailto:info@tessellation.jp?subject=t3puzzle&amp;body=`+array.join('')+`'>${mailstr}</a>`;
         }
       }
     }
     console.log(array.join(''));
-    document.querySelector('div.mail').innerHTML = `<a href='mailto:info@tessellation.jp?subject=t3puzzle&amp;body=`+array.join('')+`'>Mail (please also attach the original image)</a>`;
+    document.querySelector('div.mail').innerHTML = `<a href='mailto:info@tessellation.jp?subject=t3puzzle&amp;body=`+array.join('')+`'>${mailstr}</a>`;
   }
   function calc (data,x,y,width,height,peaks) {
     let c = center(x,y);
