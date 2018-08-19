@@ -507,18 +507,11 @@ window.addEventListener('load',function() {
     }
     return ret.join('');
   }
-  function gray(x,y,ccc) {
-    if (x===0) {
-      array.push('\n');
-    }
-    array.push('2');
-    triangle(x,y,'yellow',ccc);
-  }
   function white(x,y,ccc) {
     if (x===0) {
       array.push('\n');
     }
-    array.push('0');
+    array.push('1');
     triangle(x,y,'white',ccc);
   }
   function black(x,y,ccc) {
@@ -526,7 +519,7 @@ window.addEventListener('load',function() {
     if (x===0) {
       array.push('\n');
     }
-    array.push('1');
+    array.push('0');
     triangle(x,y,'black',ccc);
   }
   function center(x,y) {
