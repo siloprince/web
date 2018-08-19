@@ -28,7 +28,10 @@ window.addEventListener('load',function() {
   let svg = [];
   const rgba = 4;
   function run (e) {
+    svg.length=0;
+    array.length=0;
     svg.push(`<svg width="240" height="180">`);
+    svg.push(`<style>polygon.white { fill:white; } </style>`);
     svg.push(`<g transform="translate(10,10)">`);
     svg.push(`<g transform="scale(${svgScale},${svgScale})">`);
     let disp = document.querySelector('canvas.disp');
@@ -144,10 +147,30 @@ window.addEventListener('load',function() {
     drawGrid(svgWidth,svgHeight);
     svg.push('</g></svg>');
     document.querySelector('div.draw').innerHTML = svg.join('');
+    let svgNode = document.querySelector('svg');
+    svgNode.addEventListener('click',flip,false);
+    svgNode.addEventListener('touchend',flip,false);
+    function flip(e) {
+      let target = e.target;
+      let tagName = target.tagName;
+      if (tagName==='polygon') {
+        target.classList.toggle('white');
+        let id = target.id;
+        if (/tr(\d+)/.exec(id)) {
+          let idv = RegExp.$1;
+          let idx = parseInt(idv,10);
+          if (array[idx]==='0') {
+            array[idx]='1';
+          } else {
+            array[idx]='0';
+          }
+          console.log(array.join(''));
+          document.querySelector('div.mail').innerHTML = `<a href='mailto:info@tessellation.jp?subject=t3puzzle&amp;body=`+array.join('')+`'>Mail (please also attach the original image)</a>`;
+        }
+      }
+    }
     console.log(array.join(''));
-    document.querySelector('div.mail').innerHTML = `<a href='mailto:info@tessellation.jp?subject=t3puzzle&amp;body=`+array.join('')+`'>Mail (please also attach image)</a>`;
-    svg.length=0;
-    array.length=0;
+    document.querySelector('div.mail').innerHTML = `<a href='mailto:info@tessellation.jp?subject=t3puzzle&amp;body=`+array.join('')+`'>Mail (please also attach the original image)</a>`;
   }
   function calc (data,x,y,width,height,peaks) {
     let c = center(x,y);
@@ -500,7 +523,7 @@ window.addEventListener('load',function() {
       array.push('\n');
     }
     array.push('1');
-    triangle(x,y,'green',ccc);
+    triangle(x,y,'black',ccc);
   }
   function center(x,y) {
     let cx = x*sqrt3;
@@ -532,8 +555,12 @@ window.addEventListener('load',function() {
     if (outside(x,y)) {
         return;
     }
+    let colorclass='';
+    if (color==='white') {
+      colorclass='class="white"';
+    }
     svg.push(`<g transform="translate(${c[0]},${c[1]})rotate(${rot})">`);
-    svg.push(`<polygon id="tr${ccc}" points="-1.7320508,-1 1.7320508,-1 0,2" style="fill:${color};"></polygon>`);
+    svg.push(`<polygon ${colorclass} id="tr${ccc}" points="-1.7320508,-1 1.7320508,-1 0,2" ></polygon>`);
     svg.push('</g>');
   }
   function moveTo (x,y) {
